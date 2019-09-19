@@ -129,7 +129,7 @@ class Fixnum
             (layer + 1).times() do |row|
               print "--"*(layer - row) + "   "
               (row + 1).times() do |index|
-                comb = pentachoron.sex_choose(index, row, layer, cell, pentachoron)
+                comb = hexateron.sex_choose(index, row, layer, cell, pentachoron)
                 print "#{comb}" + " "*(4-comb.to_s.length)
                 sum += comb
               end
