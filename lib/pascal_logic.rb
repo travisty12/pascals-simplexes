@@ -3,7 +3,9 @@ class Fixnum
     puts "-"*20
     print "How many layers deep? "
     number = gets.chomp.to_s.to_i
-    if self == 2
+    if self == 3
+      self.three(number)
+    elsif self == 2
       self.two(number)
     else
       puts "Oops! That's not an option -- yet."
@@ -34,6 +36,25 @@ class Fixnum
     end
   end
 
+  def three(total)
+    total.times() do |layer|
+      sum = 0
+      puts "-"*20
+      puts "*"*5 + " Layer #{layer + 1} " + "*"*5
+      puts "-"*20
+      (layer + 1).times() do |row|
+        print "--"*(layer - row) + "   "
+        (row + 1).times() do |index|
+          comb = layer.tri_choose(index, row)
+          print "#{comb}" + " "*(4-comb.to_s.length)
+          sum += comb
+        end
+        puts "--"*(layer - row)
+      end
+      puts "-"*5 + " Sum: #{sum} " + "-"*5
+    end
+  end
+
   def fact
     if (self == 0)
       return 1
@@ -44,5 +65,9 @@ class Fixnum
 
   def choose(index) # 'self' is the row
     return self.fact() / (index.fact() * (self - index).fact())
+  end
+
+  def tri_choose(index, row) # 'self' is the layer
+    return self.fact() / ((row - index).fact() * index.fact() * (self - row).fact())
   end
 end
