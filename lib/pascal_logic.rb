@@ -3,7 +3,9 @@ class Fixnum
     puts "-"*20
     print "How many layers deep? "
     number = gets.chomp.to_s.to_i
-    if self == 5
+    if self == 6
+      self.six(number)
+    elsif self == 5
       self.five(number)
     elsif self == 4
       self.four(number)
@@ -109,6 +111,37 @@ class Fixnum
     end
   end
 
+  def six(total)
+    total.times() do |hexateron|
+      sum = 0
+      puts "-"*20
+      puts "*"*5 + " Hexateron #{hexateron + 1} " + "*"*5
+      (hexateron + 1).times() do |pentachoron|
+        puts "-"*20
+        puts "*"*5 + " Pentatope #{pentachoron + 1} " + "*"*5
+        (pentachoron + 1).times() do |cell|
+          puts "-"*20
+          puts "*"*5 + " Cell #{cell + 1} " + "*"*5
+          (cell + 1).times() do |layer|
+            puts "-"*20
+            puts "-"*5 + " Layer #{layer + 1} " + "-"*5
+            puts "-"*20
+            (layer + 1).times() do |row|
+              print "--"*(layer - row) + "   "
+              (row + 1).times() do |index|
+                comb = pentachoron.sex_choose(index, row, layer, cell, pentachoron)
+                print "#{comb}" + " "*(4-comb.to_s.length)
+                sum += comb
+              end
+              puts "--"*(layer - row)
+            end
+          end
+        end
+      end
+      puts "-"*5 + " Sum: #{sum} " + "-"*5
+    end
+  end
+
   def fact
     if (self == 0)
       return 1
@@ -131,5 +164,9 @@ class Fixnum
 
   def quint_choose(index, row, layer, cell) # 'self' is the pentachoron
     return self.fact() / ((self - cell).fact() * (cell - layer).fact() * (layer - row).fact() * (row - index).fact() * index.fact())
+  end
+
+  def sex_choose(index, row, layer, cell, pentachoron) # 'self' is the hexateron
+    return self.fact() / ((self - pentachoron).fact() * (pentachoron - cell).fact() * (cell - layer).fact() * (layer - row).fact() * (row - index).fact() * index.fact())
   end
 end
